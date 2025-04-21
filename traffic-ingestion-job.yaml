@@ -1,0 +1,40 @@
+executionFrameworkSpec:
+  name: "standalone"
+  segmentGenerationJobRunnerClassName: "org.apache.pinot.plugin.ingestion.batch.standalone.SegmentGenerationJobRunner"
+  segmentTarPushJobRunnerClassName: "org.apache.pinot.plugin.ingestion.batch.standalone.SegmentTarPushJobRunner"
+
+jobType: "SegmentCreationAndTarPush"
+
+inputDirURI: "file:/Users/chelseajaculina/GitHub/bigdata-hw5/input/"
+outputDirURI: "file:/Users/chelseajaculina/GitHub/bigdata-hw5/output/"
+overwriteOutput: true
+
+pinotFSSpecs:
+  - scheme: file
+    className: "org.apache.pinot.spi.filesystem.LocalPinotFS"
+
+recordReaderSpec:
+  dataFormat: "csv"
+  className: "org.apache.pinot.plugin.inputformat.csv.CSVRecordReader"
+  configs:
+    delimiter: ","
+    header: "true"
+    quoteChar: "\""
+
+tableSpec:
+  tableName: "websiteTraffic"
+  schemaURI: "file:/Users/chelseajaculina/GitHub/bigdata-hw5/traffic-schema.json"
+  tableConfigURI: "file:/Users/chelseajaculina/GitHub/bigdata-hw5/traffic-table.json"
+
+segmentNameGeneratorSpec:
+  type: "simple"
+  configs:
+    segmentNamePrefix: "websiteTraffic_"
+
+pinotClusterSpecs:
+  - controllerURI: "http://localhost:9000"
+
+pushJobSpec:
+  pushAttempts: 2
+  pushRetryIntervalMillis: 1000
+  segmentUriPrefix: "file:/Users/chelseajaculina/GitHub/bigdata-hw5/output/"

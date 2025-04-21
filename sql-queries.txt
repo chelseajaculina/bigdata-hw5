@@ -1,0 +1,46 @@
+SELECT page, COUNT(*) AS views
+FROM websiteTraffic
+GROUP BY page
+ORDER BY views DESC
+LIMIT 10;
+
+Get all visits to the /contact page
+SELECT * FROM websiteTraffic
+WHERE page = '/contact';
+
+Count Visits to Each Page
+SELECT page, COUNT(*) AS visit_count
+FROM websiteTraffic
+GROUP BY page;
+
+Total time spent by each user
+SELECT user_id, SUM(duration) AS total_duration
+FROM websiteTraffic
+GROUP BY user_id;
+
+List all distinct users who visited the /product page
+SELECT DISTINCT user_id
+FROM websiteTraffic
+WHERE page = '/product';
+
+Find the average session duration for the /home page
+SELECT AVG(duration) AS avg_home_duration
+FROM websiteTraffic
+WHERE page = '/home';
+
+Most Recent Visit by timestamp
+SELECT *
+FROM websiteTraffic
+ORDER BY timestamp DESC
+LIMIT 1;
+
+Get the number of sessions per page type SELECT page, COUNT(session_id) AS session_count
+FROM websiteTraffic
+GROUP BY page;
+
+Session Duration Statistics
+SELECT 
+  MIN(CAST(duration AS INT)), 
+  MAX(CAST(duration AS INT)), 
+  AVG(CAST(duration AS INT))
+FROM websiteTraffic;
